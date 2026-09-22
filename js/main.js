@@ -471,12 +471,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Simulate form submission
+          // Simulate form submission
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
+            const formData = new FormData(contactForm);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showFormMessage('Thanks for reaching out! I\'ll get back to you soon.', 'success');
+            contactForm.reset();
+          } else {
+            showFormMessage('Something went wrong. Please try again.', 'error');
+          }
+        })
+        .catch(() => {
+          showFormMessage('Something went wrong. Please try again.', 'error');
+        })
+        .finally(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
+       
       setTimeout(() => {
         showFormMessage('Thanks for reaching out! I\'ll get back to you soon.', 'success');
         contactForm.reset();
@@ -833,12 +857,29 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
-      setTimeout(() => {
-        showFormMessage('Thanks for reaching out! I\'ll get back to you soon.', 'success');
-        contactForm.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }, 1200);
+           const formData = new FormData(contactForm);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            showFormMessage('Thanks for reaching out! I\'ll get back to you soon.', 'success');
+            contactForm.reset();
+          } else {
+            showFormMessage('Something went wrong. Please try again.', 'error');
+          }
+        })
+        .catch(() => {
+          showFormMessage('Something went wrong. Please try again.', 'error');
+        })
+        .finally(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
     });
   }
 
